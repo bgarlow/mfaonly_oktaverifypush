@@ -1,0 +1,553 @@
+{
+	"info": {
+		"_postman_id": "a8501fff-737b-443b-8319-00b9c690643d",
+		"name": "MFA-only user creation/enrollment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Find User by TPR ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/api/v1/users?q={{tprId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{tprId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Factors",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/api/v1/users/{{userId}}/factors",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"factors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Activated User with Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"profile\": {\n    \"email\": \"TPR{{$timestamp}}@{{dummyDomain}}\",\n    \"login\": \"TPR{{$timestamp}}\",\n    \"tprId\": \"TPR{{$timestamp}}\"\n  },\n  \"credentials\": {\n    \"password\" : { \"value\": \"dwpyumUU{{$randomInt}}{{$randomInt}}-{{$randomInt}}\" }\n  }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users?activate=true",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "activate",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Without Credentials",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"profile\": {\n    \"login\": \"TPR{{$timestamp}}\",\n    \"email\": \"TPR{{$timestamp}}@dummy.com\"\n  }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User with Authentication Provider",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"profile\": {\n    \"login\": \"TPR{{$timestamp}}\",\n    \"email\": \"TPR{{$timestamp}}@dummy.com\"\n  },\n  \"credentials\": {\n    \"provider\": {\n      \"type\": \"FEDERATION\",\n      \"name\": \"FEDERATION\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users?provider=true",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "provider",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enroll Okta Verify Push Factor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"factorType\": \"push\",\n  \"provider\": \"OKTA\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users/{{userId}}/factors",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"factors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Push  Challenge",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}  "
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users/{{userId}}/factors/{{factorId}}/verify",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"factors",
+						"{{factorId}}",
+						"verify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Factors to Enroll",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/api/v1/users/{{userId}}/factors/catalog",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"factors",
+						"catalog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Factor",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS{{apikey}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/api/v1/users/{{userId}}/factors/{{factorId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"factors",
+						"{{factorId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try to create duplicate user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"profile\": {\n    \"email\": \"TPR1538755756@{{dummyDomain}}\",\n    \"login\": \"TPR1538755756\",\n    \"tprId\": \"TPR1538755756\"\n  },\n  \"credentials\": {\n    \"password\" : { \"value\": \"dwpyumUU{{$randomInt}}{{$randomInt}}-{{$randomInt}}\" }\n  }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users?activate=true",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "activate",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Poll Factor Status",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users/{{userId}}/factors/{{factorId}}/lifecycle/activate/poll",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"factors",
+						"{{factorId}}",
+						"lifecycle",
+						"activate",
+						"poll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activate Okta Verify with Push via SMS link",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"profile\": {\n\t\t\"phoneNumber\": \"5052694259\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users/{{userId}}/factors/{{factorId}}/lifecycle/activate/sms",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"factors",
+						"{{factorId}}",
+						"lifecycle",
+						"activate",
+						"sms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users/{{userId}}/lifecycle/reset_password?sendEmail=false",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"lifecycle",
+						"reset_password"
+					],
+					"query": [
+						{
+							"key": "sendEmail",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Password via API",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "SSWS {{apikey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"credentials\": {\n    \"password\" : { \"value\": \"{{password}}\" }\n  }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/users/{{userId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
