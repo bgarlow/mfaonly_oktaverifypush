@@ -1,5 +1,5 @@
 # mfaonly_oktaverifypush
-Example API calls to create a new user and enroll in Okta Verify with Push for MFA only.
+Example API calls to create a new user and enroll in Okta Verify with Push for MFA only. This repo includes a Postman Collection for the flow described below, as well as a few related calls (different options for creating the user, resetting factors, etc.)
 
 ## Create User with Authentication Provider
 This will create a new user with no password, but who's status is Active. The _provider_ attribute on the user's _credentials_ object will be set to "FEDERATION". In the future, this user could be converted to an Okta-mastered user (with Okta-controlled password) via the Reset Password API endpoint. See the example at the bottom of this document.
