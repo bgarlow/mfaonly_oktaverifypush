@@ -1,6 +1,41 @@
 # mfaonly_oktaverifypush
 Example API calls to create a new user and enroll in Okta Verify with Push for MFA only. This repo includes a Postman Collection for the flow described below, as well as a few related calls (different options for creating the user, resetting factors, etc.)
 
+## Use Case (abstracted)
+
+The user creation and MFA enrollment flow described below was developed for a customer who wanted to add Multi-Factor Authentication (push notification in this case) to a service that brokers orders between the application used by the end user and a 3rd party service. The user may work in one of several supported front-end apps. When the user places an order, it is received by the broker service which performs some validation and forwards the order to one of several 3rd party systems for fulfilment. Orders for certain restricted materials require a second form of authentication.
+
+The organization that manages the broker service has an enrollment process whereby a user A at company X is given an account to use company X's front-end application to place orders through the broker service. The end user is assigned a unique ID number that identifies the end user to the broker service. The end user may be enrolled to use front-end systems at more than one company, but will always use the same ID (let's call it their BrokerUserID...that's right BUD). User records are maintained by the broker service. The broker service will leverage Okta for MFA only.
+
+Push notification is the preferred factor for restricted materials, so the broker service will leverage Okta Verify with Push. In order to enroll an end user in a factor in Okta, an Okta user must be created. We will create Okta users with minimal profile information and without the ability to authenticate with Okta. Their Okta username will be their BrokerUserID.
+
+The sequence diagrams below describes the flow user enrollment in MFA (which includes creating the user in Okta and enrolling them in Okta Verify with Push), as well as the flow for challenging the user for MFA.
+
+
+```sequence
+user->>Front-End App: Login
+user->>Front-End App: Click to enroll in Broker Service
+Front-End App->>user: Display instructions for downloading Okta Verify app
+Note over user: Download Okta Verify from app store and install 
+Front-End App->>Broker Service: Enroll (BUD)
+Broker Service->>Okta: Create new user with userName = BUD
+Okta->>Broker Service: Return new user's Okta UUID
+Broker Service->>Okta: Enroll new user in Okta Verify with Push
+Okta->>Broker Service: factorId and activation links
+Broker Service->>Front-End App: URL of QR code 
+Broker Service->>Front-End App: (ALT) SMS or Email activation links
+Front-End App->>user: Display QR code
+loop Poll to see if user has scanned QR code
+Broker Service->>Okta: /api/v1/users/{BUD}/factors/{factorId}/lifecycle/activate/poll
+Okta->>Broker Service: factorStatus: "WAITING"
+Note over user: Scans QR code with \nOkta Verify app
+end
+Okta->>Broker Service: status: "ACTIVE"
+Broker Service->>Front-End App: status
+Note over Front-End App: indicate success/failure of factor enrollment
+```
+
+
 ## Create User with Authentication Provider
 This will create a new user with no password, but who's status is Active. The _provider_ attribute on the user's _credentials_ object will be set to "FEDERATION". In the future, this user could be converted to an Okta-mastered user (with Okta-controlled password) via the Reset Password API endpoint. See the example at the bottom of this document.
 
