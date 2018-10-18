@@ -35,28 +35,9 @@ Broker Service->>Front-End App: status
 Note over Front-End App: indicate success/failure of factor enrollment
 ```
 
-![Alt text](https://g.gravizo.com/source/custom_mark10?https%3A%2F%2Fraw.githubusercontent.com%2Fbgarlow%index%2FREADME.md)
-<details> 
-<summary></summary>
-custom_mark10
-  digraph G {
-    size ="4,4";
-    main [shape=box];
-    main -> parse [weight=8];
-    parse -> execute;
-    main -> init [style=dotted];
-    main -> cleanup;
-    execute -> { make_string; printf};
-    init -> make_string;
-    edge [color=red];
-    main -> printf [style=bold,label="100 times"];
-    make_string [label="make a string"];
-    node [shape=box,style=filled,color=".7 .3 1.0"];
-    execute -> compare;
-  }
-custom_mark10
-</details>
-      
+
+![Alt text](http://g.gravizo.com/source?https%3A%2F%2Fbitbucket.org%2FTLmaK0%2Fgravizo-example%2Fraw%2Fmaster%2Fsource.uml)
+
 
 ## Create User with Authentication Provider
 This will create a new user with no password, but who's status is Active. The _provider_ attribute on the user's _credentials_ object will be set to "FEDERATION". In the future, this user could be converted to an Okta-mastered user (with Okta-controlled password) via the Reset Password API endpoint. See the example at the bottom of this document.
