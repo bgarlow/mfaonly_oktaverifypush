@@ -13,43 +13,29 @@ The sequence diagrams below describes the flow user enrollment in MFA (which inc
 
 
 ```sequence
-user->>Front-End App: Login
-user->>Front-End App: Click to enroll in Broker Service
-Front-End App->>user: Display instructions for downloading Okta Verify app
+user->>app: Login
+user->>app: Click to enroll in broker
+app->>user: Display instructions for downloading Okta Verify app
 Note over user: Download Okta Verify from app store and install 
-Front-End App->>Broker Service: Enroll (BUD)
-Broker Service->>Okta: Create new user with userName = BUD
-Okta->>Broker Service: Return new user's Okta UUID
-Broker Service->>Okta: Enroll new user in Okta Verify with Push
-Okta->>Broker Service: factorId and activation links
-Broker Service->>Front-End App: URL of QR code 
-Broker Service->>Front-End App: (ALT) SMS or Email activation links
-Front-End App->>user: Display QR code
+app->>broker: Enroll (BUD)
+broker->>Okta: Create new user with userName = BUD
+Okta->>broker: Return new user's Okta UUID
+broker->>Okta: Enroll new user in Okta Verify with Push
+Okta->>broker: factorId and activation links
+broker->>app: URL of QR code 
+broker->>app: (ALT) SMS or Email activation links
+app->>user: Display QR code
 loop Poll to see if user has scanned QR code
-Broker Service->>Okta: /api/v1/users/{BUD}/factors/{factorId}/lifecycle/activate/poll
-Okta->>Broker Service: factorStatus: "WAITING"
+broker->>Okta: /api/v1/users/{BUD}/factors/{factorId}/lifecycle/activate/poll
+Okta->>broker: factorStatus: "WAITING"
 Note over user: Scans QR code with \nOkta Verify app
 end
-Okta->>Broker Service: status: "ACTIVE"
-Broker Service->>Front-End App: status
-Note over Front-End App: indicate success/failure of factor enrollment
+Okta->>broker: status: "ACTIVE"
+broker->>app: status
+Note over app: indicate success/failure of factor enrollment
 ```
 
-
-![Alt text](https://g.gravizo.com/source/custom_mark13?https%3A%2F%2Fgithub.com%2Fbgarlow%2Fmfaonly_oktaverifypush%2Fblob%2Fmaster%2FREADME.md)
-<details> 
-<summary></summary>
-custom_mark13
-@startuml;
-actor User;
-participant "Chester Class" as A;
-participant "Second Class" as B;
-participant "Last Class" as C;
-@enduml
-custom_mark13
-</details>
-
-<!-- https%3A%2F%2Fgithub.com%2Fbgarlow%2Fmfaonly_oktaverifypush%2Fblob%2Fmaster%2FREADME.md -->
+![Enrollment Sequence Diagram]();
 
 ## Create User with Authentication Provider
 This will create a new user with no password, but who's status is Active. The _provider_ attribute on the user's _credentials_ object will be set to "FEDERATION". In the future, this user could be converted to an Okta-mastered user (with Okta-controlled password) via the Reset Password API endpoint. See the example at the bottom of this document.
