@@ -39,6 +39,10 @@ Note over Front-End App: indicate success/failure of factor enrollment
 ![Alt text](http://g.gravizo.com/source?https%3A%2F%2Fbitbucket.org%2FTLmaK0%2Fgravizo-example%2Fraw%2Fmaster%2Fsource.uml)
 
 
+![Alt text](http://g.gravizo.com/source?https%3A%2F%2Fgithub.com%2Fbgarlow%2Fmfaonly_oktaverifypush%2Fblob%2Fmaster%2Fenroll.uml)
+
+https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/enroll.txt
+
 ## Create User with Authentication Provider
 This will create a new user with no password, but who's status is Active. The _provider_ attribute on the user's _credentials_ object will be set to "FEDERATION". In the future, this user could be converted to an Okta-mastered user (with Okta-controlled password) via the Reset Password API endpoint. See the example at the bottom of this document.
 
