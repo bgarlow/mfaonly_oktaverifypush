@@ -35,7 +35,7 @@ broker->>app: status
 Note over app: indicate success/failure of factor enrollment
 ```
 
-![Enrollment Sequence Diagram]();
+![Enrollment Sequence Diagram](https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/enroll_sequence.png);
 
 ## Create User with Authentication Provider
 This will create a new user with no password, but who's status is Active. The _provider_ attribute on the user's _credentials_ object will be set to "FEDERATION". In the future, this user could be converted to an Okta-mastered user (with Okta-controlled password) via the Reset Password API endpoint. See the example at the bottom of this document.
