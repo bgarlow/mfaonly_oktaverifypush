@@ -34,10 +34,13 @@ Okta->>broker: status: "ACTIVE"
 broker->>app: status
 Note over app: indicate success/failure of factor enrollment
 ```
+#### Enrollment
 
-![Enrollment Sequence Diagram](https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/enroll_sequence.png);
+![Enrollment Sequence Diagram](https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/enroll_sequence.png)
 
-![Challenge Sequence Diagram](https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/challenge_sequence.png);
+
+#### Challenge
+![Challenge Sequence Diagram](https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/challenge_sequence.png)
 
 
 ## Create User with Authentication Provider
