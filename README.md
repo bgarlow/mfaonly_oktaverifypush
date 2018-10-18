@@ -36,7 +36,7 @@ Note over Front-End App: indicate success/failure of factor enrollment
 ```
 
 
-![Alt text](https://g.gravizo.com/source/custom_mark13?https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/README.md)
+![Alt text](https://g.gravizo.com/source/custom_mark13?https%3A%2F%2Fgithub.com%2Fbgarlow%2Fmfaonly_oktaverifypush%2Fblob%2Fmaster%2FREADME.md)
 <details> 
 <summary></summary>
 custom_mark13
@@ -61,7 +61,7 @@ deactivate A;
 custom_mark13
 </details>
 
-https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/enroll.txt
+<!-- https%3A%2F%2Fgithub.com%2Fbgarlow%2Fmfaonly_oktaverifypush%2Fblob%2Fmaster%2FREADME.md -->
 
 ## Create User with Authentication Provider
 This will create a new user with no password, but who's status is Active. The _provider_ attribute on the user's _credentials_ object will be set to "FEDERATION". In the future, this user could be converted to an Okta-mastered user (with Okta-controlled password) via the Reset Password API endpoint. See the example at the bottom of this document.
