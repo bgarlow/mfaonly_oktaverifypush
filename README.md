@@ -36,6 +36,32 @@ Note over Front-End App: indicate success/failure of factor enrollment
 ```
 
 
+![Alt text](https://g.gravizo.com/source/custom_mark13?https%3A%2F%2Fraw.githubusercontent.com%2FTbgarlow%2Findex%2Fmaster%2FREADME.md)
+<details> 
+<summary></summary>
+custom_mark13
+@startuml;
+actor User;
+participant "JEFF Class" as A;
+participant "Second Class" as B;
+participant "Last Class" as C;
+User -> A: DoWork;
+activate A;
+A -> B: Create Request;
+activate B;
+B -> C: DoWork;
+activate C;
+C -> B: WorkDone;
+destroy C;
+B -> A: Request Created;
+deactivate B;
+A -> User: Done;
+deactivate A;
+@enduml
+custom_mark13
+</details>
+
+
 ## Create User with Authentication Provider
 This will create a new user with no password, but who's status is Active. The _provider_ attribute on the user's _credentials_ object will be set to "FEDERATION". In the future, this user could be converted to an Okta-mastered user (with Okta-controlled password) via the Reset Password API endpoint. See the example at the bottom of this document.
 
