@@ -36,10 +36,30 @@ Note over Front-End App: indicate success/failure of factor enrollment
 ```
 
 
-![Alt text](http://g.gravizo.com/source?https%3A%2F%2Fbitbucket.org%2FTLmaK0%2Fgravizo-example%2Fraw%2Fmaster%2Fsource.uml)
-
-
-![Alt text](http://g.gravizo.com/source?https%3A%2F%2Fgithub.com%2Fbgarlow%2Fmfaonly_oktaverifypush%2Fblob%2Fmaster%2Fenroll.uml)
+![Alt text](https://g.gravizo.com/source/custom_mark13?https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/README.md)
+<details> 
+<summary></summary>
+custom_mark13
+@startuml;
+actor User;
+participant "Chester Class" as A;
+participant "Second Class" as B;
+participant "Last Class" as C;
+User -> A: DoWork;
+activate A;
+A -> B: Create Request;
+activate B;
+B -> C: DoWork;
+activate C;
+C -> B: WorkDone;
+destroy C;
+B -> A: Request Created;
+deactivate B;
+A -> User: Done;
+deactivate A;
+@enduml
+custom_mark13
+</details>
 
 https://github.com/bgarlow/mfaonly_oktaverifypush/blob/master/enroll.txt
 
